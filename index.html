@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Procedural Matcher</title>3
+    <script type="text/javascript" src="js/three.js"></script>
+    <script type="text/javascript" src="js/exceptions.js"></script>
+    <script type="text/javascript" src="js/Node.js"></script>
+    <script type="text/javascript" src="js/Noise.js"></script>
+    <script type="application/javascript">
+      function draw() {
+        var canvas = document.getElementById("canvas");
+        if (canvas.getContext) {
+          var ctx = canvas.getContext("2d");
+
+          var imageData = ctx.createImageData(256, 256);
+          var data = imageData.data;
+
+          var noise = new Noise();
+
+          for(var row=0; row < 256; row++) {
+            for(var col=0; col < 256; col++) {
+              color = noise.get(col/256, row/256);
+              data[(row*256+col)*4+0] = color[0];
+              data[(row*256+col)*4+1] = color[1];
+              data[(row*256+col)*4+2] = color[2];
+              data[(row*256+col)*4+3] = 255;
+            }
+          }
+
+          ctx.putImageData(imageData, 0, 0);
+        }
+      }
+    </script>
+</head>
+<body onload="draw();">
+    <h1>Procedural Matcher</h1>
+    <canvas id="canvas" width="256" height="256"></canvas>
+</body>
+</html>
